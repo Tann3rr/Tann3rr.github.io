@@ -1,46 +1,53 @@
 body {
+    background-color: rgb(36, 37, 38);
+    color: #aa8dd8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
+    flex-direction: column;
+    animation: fadein 2s; 
 }
 
-header {
-    background-color: #333;
-    color: #fff;
-    padding: 1rem 0;
+h1 {
     text-align: center;
+    margin-bottom: 10px;
+    animation: fadein 2s;
 }
 
-header h1 {
-    margin: 0;
+p {
+    font-size: 14px;
+    margin-top: 0;
+    margin-bottom: 20px;
+    animation: fadein 2s;
 }
 
-nav ul {
-    list-style: none;
-    padding: 0;
-}
-
-nav ul li {
-    display: inline;
-    margin: 0 1rem;
-}
-
-nav ul li a {
-    color: #fff;
+button {
+    background-color: #aa8dd8;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
     text-decoration: none;
+    animation: fadein 2s;
 }
 
-main {
-    padding: 2rem;
+button:hover {
+    background-color: #9a7cc8;
 }
 
-footer {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    padding: 1rem 0;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+img {
+    max-width: 150px; 
+    height: 150px;
+    margin-bottom: 10px;
+    animation: fadein 2s;
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
