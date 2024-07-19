@@ -47,6 +47,15 @@ img {
     animation: fadein 2s;
 }
 
+a {
+    color: #aa8dd8;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #9a7cc8;
+}
+
 @keyframes fadein {
     from { opacity: 0; }
     to { opacity: 1; }
