@@ -1,7 +1,7 @@
 /* Existing CSS */
 body {
     background-color: #000000; /* Changed to black */
-    color: #aa8dd8;
+    color: #ffffff;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -26,8 +26,8 @@ p {
 }
 
 button {
-    background-color: #aa8dd8;
-    color: rgb(230, 21, 21);
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
     border: none;
     padding: 10px 20px;
     font-size: 16px;
@@ -38,7 +38,7 @@ button {
 }
 
 button:hover {
-    background-color: #9a7cc8;
+    background-color: #40019e;
 }
 
 img {
@@ -49,12 +49,12 @@ img {
 }
 
 a {
-    color: #aa8dd8;
+    color: #ffffff;
     text-decoration: none;
 }
 
 a:hover {
-    color: #9a7cc8;
+    color: #ffffff;
 }
 
 @keyframes fadein {
