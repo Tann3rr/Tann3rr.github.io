@@ -1,6 +1,6 @@
 /* Existing CSS */
 body {
-    background-color: (12, 50, 85);
+    background-color: #000000; /* Changed to black */
     color: #aa8dd8;
     display: flex;
     justify-content: center;
