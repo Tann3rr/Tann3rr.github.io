@@ -1,6 +1,6 @@
 /* Existing CSS */
 body {
-    background-color: rgb(12, 50, 85);
+    background-color: (12, 50, 85);
     color: #aa8dd8;
     display: flex;
     justify-content: center;
@@ -9,7 +9,7 @@ body {
     margin: 0;
     font-family: 'Montserrat', sans-serif;
     flex-direction: column;
-    animation: fadein 5s, rainbow 0.1s infinite; /* Added rainbow animation */
+    animation: fadein 5s;
 }
 
 h1 {
