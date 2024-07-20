@@ -1,3 +1,4 @@
+/* Existing CSS */
 body {
     background-color: rgb(36, 37, 38);
     color: #aa8dd8;
@@ -8,7 +9,7 @@ body {
     margin: 0;
     font-family: Arial, sans-serif;
     flex-direction: column;
-    animation: fadein 2s; 
+    animation: fadein 2s, rainbow 10s infinite; /* Added rainbow animation */
 }
 
 h1 {
@@ -59,4 +60,15 @@ a:hover {
 @keyframes fadein {
     from { opacity: 0; }
     to { opacity: 1; }
+}
+
+@keyframes rainbow {
+    0% { background-color: red; }
+    14% { background-color: orange; }
+    28% { background-color: yellow; }
+    42% { background-color: green; }
+    57% { background-color: blue; }
+    71% { background-color: indigo; }
+    85% { background-color: violet; }
+    100% { background-color: red; }
 }
