@@ -9,7 +9,7 @@ body {
     margin: 0;
     font-family: Arial, sans-serif;
     flex-direction: column;
-    animation: fadein 5s, rainbow 1s infinite; /* Added rainbow animation */
+    animation: fadein 5s, rainbow 0.1s infinite; /* Added rainbow animation */
 }
 
 h1 {
