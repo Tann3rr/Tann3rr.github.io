@@ -1,157 +1,61 @@
-const board = document.getElementById('board');
-const status = document.querySelector('.status');
-const restartBtn = document.querySelector('.restart-btn');
 
-const X_CLASS = 'x';
-const O_CLASS = 'o';
-let currentClass;
-let aiTurn = false;
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
 
-const WINNING_COMBINATIONS = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6]
-];
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-const cells = Array.from(document.querySelectorAll('.cell'));
+        let particlesArray = [];
 
-startGame();
-
-restartBtn.addEventListener('click', startGame);
-
-function startGame() {
-    aiTurn = false;
-    currentClass = X_CLASS;
-    cells.forEach(cell => {
-        cell.classList.remove(X_CLASS);
-        cell.classList.remove(O_CLASS);
-        cell.removeEventListener('click', handleClick);
-        cell.addEventListener('click', handleClick, { once: true });
-    });
-    setBoardHoverClass();
-    status.innerText = "User's Turn";
-}
-
-function handleClick(e) {
-    const cell = e.target;
-    placeMark(cell, currentClass);
-
-    if (checkWin(currentClass)) {
-        endGame(false);
-    } else if (isDraw()) {
-        endGame(true);
-    } else {
-        swapTurns();
-        setBoardHoverClass();
-        if (aiTurn) {
-            status.innerText = "AI's Turn";
-            setTimeout(aiTurnLogic, 500);
-        }
-    }
-}
-
-function placeMark(cell, currentClass) {
-    cell.classList.add(currentClass);
-}
-
-function aiTurnLogic() {
-    const bestMove = minimax(cells, O_CLASS).index;
-    placeMark(cells[bestMove], O_CLASS);
-
-    if (checkWin(O_CLASS)) {
-        endGame(false);
-    } else if (isDraw()) {
-        endGame(true);
-    } else {
-        swapTurns();
-        setBoardHoverClass();
-        status.innerText = "User's Turn";
-    }
-}
-
-function endGame(draw) {
-    status.innerText = draw ? "It's a Draw!" : `${currentClass === X_CLASS ? "User" : "AI"} Wins!`;
-    cells.forEach(cell => cell.removeEventListener('click', handleClick));
-}
-
-function isDraw() {
-    return cells.every(cell => cell.classList.contains(X_CLASS) || cell.classList.contains(O_CLASS));
-}
-
-function swapTurns() {
-    currentClass = currentClass === X_CLASS ? O_CLASS : X_CLASS;
-    aiTurn = !aiTurn;
-}
-
-function checkWin(currentClass) {
-    return WINNING_COMBINATIONS.some(combination => {
-        return combination.every(index => cells[index].classList.contains(currentClass));
-    });
-}
-
-function setBoardHoverClass() {
-    board.classList.remove(X_CLASS);
-    board.classList.remove(O_CLASS);
-    if (aiTurn) {
-        board.classList.add(O_CLASS);
-    } else {
-        board.classList.add(X_CLASS);
-    }
-}
-
-function minimax(newBoard, player) {
-    const availableSpots = newBoard.filter(cell => !cell.classList.contains(X_CLASS) && !cell.classList.contains(O_CLASS));
-    
-    if (checkWin(O_CLASS)) {
-        return { score: 10 };
-    } else if (checkWin(X_CLASS)) {
-        return { score: -10 };
-    } else if (availableSpots.length === 0) {
-        return { score: 0 };
-    }
-    
-    const moves = [];
-    for (let i = 0; i < availableSpots.length; i++) {
-        const move = {};
-        move.index = newBoard.indexOf(availableSpots[i]);
-        
-        newBoard[move.index].classList.add(player);
-        
-        if (player === O_CLASS) {
-            const result = minimax(newBoard, X_CLASS);
-            move.score = result.score;
-        } else {
-            const result = minimax(newBoard, O_CLASS);
-            move.score = result.score;
-        }
-        
-        newBoard[move.index].classList.remove(player);
-        moves.push(move);
-    }
-    
-    let bestMove;
-    if (player === O_CLASS) {
-        let bestScore = -Infinity;
-        for (let i = 0; i < moves.length; i++) {
-            if (moves[i].score > bestScore) {
-                bestScore = moves[i].score;
-                bestMove = i;
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 5 + 1;
+                this.speedX = Math.random() * 3 - 1.5;
+                this.speedY = Math.random() * 3 - 1.5;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                
+                if (this.size > 0.2) this.size -= 0.1;
+            }
+            draw() {
+                ctx.fillStyle = 'white';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
             }
         }
-    } else {
-        let bestScore = Infinity;
-        for (let i = 0; i < moves.length; i++) {
-            if (moves[i].score < bestScore) {
-                bestScore = moves[i].score;
-                bestMove = i;
+
+        function init() {
+            for (let i = 0; i < 100; i++) {
+                particlesArray.push(new Particle());
             }
         }
-    }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+                
+                if (particlesArray[i].size <= 0.2) {
+                    particlesArray.splice(i, 1);
+                    i--;
+                    particlesArray.push(new Particle());
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+
+        init();
+        animate();
+
+        window.addEventListener('resize', function() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            init();
+        });
     
-    return moves[bestMove];
-}
